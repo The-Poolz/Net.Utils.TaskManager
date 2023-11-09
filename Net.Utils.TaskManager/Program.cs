@@ -10,7 +10,7 @@ internal class Program
         // Add tasks
         for (int i = 0; i < 10; i++)
         {
-            manager.Add(GetTask(i, 0, manager));
+            manager.AddTask(GetTask(i, 0, manager));
         }
 
         // Start and wait for all tasks to complete

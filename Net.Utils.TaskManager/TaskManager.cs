@@ -2,7 +2,7 @@
 
 namespace Net.Utils.TaskManager;
 
-public class TaskManager
+public class TaskManager : IAddTask
 {
     private readonly ConcurrentBag<Task> _tasks;
     private bool started;
@@ -18,7 +18,7 @@ public class TaskManager
         AddRange(tasks);
     }
 
-    public void Add(Task task)
+    public void AddTask(Task task)
     {
         _tasks.Add(task);
         if (started) task.Start();
@@ -26,7 +26,7 @@ public class TaskManager
 
     public void AddRange(IEnumerable<Task> tasks)
     {
-        tasks.ToList().ForEach(Add);
+        tasks.ToList().ForEach(AddTask);
     }
 
     public async Task StartAsync()
