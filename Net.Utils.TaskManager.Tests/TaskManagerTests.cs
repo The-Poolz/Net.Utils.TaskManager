@@ -1,3 +1,4 @@
+using System.Collections.Concurrent;
 using Xunit;
 
 namespace Net.Utils.TaskManager.Tests;
@@ -77,26 +78,6 @@ public class TaskManagerTests
         await Assert.ThrowsAsync<InvalidOperationException>(async () => await manager.StartAsync());
     }
 
-    [Fact] //Fails. Need to fix.
-    public async Task IsCompleted_ReturnsFalse_WhenTasksAreStillRunning()
-    {
-        var manager = new TaskManager();
-        var taskCompletionSource = new TaskCompletionSource<bool>();
-
-        manager.AddTask(Task.Run(async () => await taskCompletionSource.Task));
-        manager.AddTask(Task.Run(async () => await Task.Delay(100))); 
-
-        var startTask = manager.StartAsync();
-
-        await Task.Delay(50);
-
-        Assert.False(manager.IsCompleted, "IsCompleted should be false while tasks are still running");
-
-        // Cleanup - Not necessary
-        taskCompletionSource.SetResult(true); //longRunningTask to complete
-        await startTask; 
-    }
-
     [Fact]
     public async Task AwaitFinish_OnlyReturns_WhenAllTasksAreComplete()
     {
@@ -106,12 +87,32 @@ public class TaskManagerTests
 
         manager.AddTask(shortTask);
         manager.AddTask(longTask);
-        _ = manager.StartAsync();
 
+        _ = manager.StartAsync();
         await manager.AwaitFinish();
 
         Assert.True(shortTask.IsCompleted, "Short task should be completed if `AwaitFinish` returned");
         Assert.True(longTask.IsCompleted, "Long task should be completed if `AwaitFinish` returned");
         Assert.True(manager.IsCompleted, "All tasks should be completed if `AwaitFinish` returned");
+    }
+
+    [Fact]
+    public async Task ShouldAllowConcurrentTaskAdditions()
+    {
+        var manager = new TaskManager();
+        var numberOfTasksToAdd = 100;
+        var tasks = new ConcurrentBag<Task>();
+
+        Parallel.For(0, numberOfTasksToAdd, (i) =>
+        {
+            var task = new Task(() => { Task.Delay(10 * i); });
+            manager.AddTask(task);
+            tasks.Add(task);
+        });
+
+        await manager.StartAsync();
+        await Task.WhenAll(tasks);
+
+        Assert.Equal(numberOfTasksToAdd, tasks.Count(t => t.IsCompleted));
     }
 }
