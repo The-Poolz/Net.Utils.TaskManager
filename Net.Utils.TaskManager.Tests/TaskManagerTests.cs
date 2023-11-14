@@ -5,10 +5,10 @@ namespace Net.Utils.TaskManager.Tests;
 public class TaskManagerTests
 {
     [Fact]
-    public async Task CompleteOneTaskAdded()
+    public async Task TaskManager_CompleteOneTaskAdded()
     {
         var manager = new TaskManager();
-        var initialTask = new Task(() => Thread.Sleep(100));
+        var initialTask = new Task(() => Task.Delay(100));
 
         manager.AddTask(initialTask);
 
@@ -18,13 +18,13 @@ public class TaskManagerTests
     }
 
     [Fact]
-    public async Task CompleteArrayOfTasksAdded()
+    public async Task TaskManager_CompletesMultipleAddedTasks()
     {
         IEnumerable<Task> tasks = new Task[]
         {
-            new Task(() => Thread.Sleep(100)),
-            new Task(() => Thread.Sleep(200)),
-            new Task(() => Thread.Sleep(300))
+            new Task(() => Task.Delay(100)),
+            new Task(() => Task.Delay(200)),
+            new Task(() => Task.Delay(300))
         };
 
         var manager = new TaskManager(tasks);
@@ -35,14 +35,14 @@ public class TaskManagerTests
     }
 
     [Fact]
-    public async Task CompleteDynamicTasksAdded()
+    public async Task TaskManager_CompletesTasksWhenDynamicallyAdded()
     {
         var manager = new TaskManager();
 
         var initialTask = new Task(() => // Simulates work and adds another task dynamically
         {        
-            Thread.Sleep(100);
-            manager.AddTask(new Task(() => Thread.Sleep(100)));
+            Task.Delay(100);
+            manager.AddTask(new Task(() => Task.Delay(100)));
         });
         manager.AddTask(initialTask);
 
@@ -52,34 +52,48 @@ public class TaskManagerTests
     }
 
     [Fact]
+    public async Task TasksAddedAfterStart_ShouldStartImmediately()
+    {
+        var manager = new TaskManager();
+        await manager.StartAsync(); // Start with no tasks
+
+        var taskStarted = false;
+        var task = new Task(() => { taskStarted = true; });
+        manager.AddTask(task);
+        await Task.Delay(50);
+
+        Assert.True(taskStarted, "Task added after `StartAsync` should've started immediately.");
+    }
+
+    [Fact]
     public async Task StartAsync_ThrowsInvalidOperationException_IfCalledTwice()
     {
         var manager = new TaskManager();
 
-        manager.AddTask(new Task(() => Thread.Sleep(100)));
+        manager.AddTask(new Task(() => Task.Delay(100)));
 
         await manager.StartAsync();
 
         await Assert.ThrowsAsync<InvalidOperationException>(async () => await manager.StartAsync());
     }
 
-    [Fact (Skip = "Fails, need to fix")]
+    [Fact] //Fails. Need to fix.
     public async Task IsCompleted_ReturnsFalse_WhenTasksAreStillRunning()
     {
         var manager = new TaskManager();
         var taskCompletionSource = new TaskCompletionSource<bool>();
 
-        manager.AddTask(Task.Run(() => { taskCompletionSource.Task.Wait(); }));
-        manager.AddTask(Task.Run(() => { Thread.Sleep(100); })); 
+        manager.AddTask(Task.Run(async () => await taskCompletionSource.Task));
+        manager.AddTask(Task.Run(async () => await Task.Delay(100))); 
 
         var startTask = manager.StartAsync();
 
-        await Task.Delay(200);
+        await Task.Delay(50);
 
         Assert.False(manager.IsCompleted, "IsCompleted should be false while tasks are still running");
 
         // Cleanup - Not necessary
-        taskCompletionSource.SetResult(true); // This will allow the longRunningTask to complete
+        taskCompletionSource.SetResult(true); //longRunningTask to complete
         await startTask; 
     }
 
