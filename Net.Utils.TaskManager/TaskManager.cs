@@ -19,13 +19,13 @@ public class TaskManager : IAddTask
         foreach (var task in tasks) AddTask(task);
     }
 
-    public void AddTask(Task task)
+    public virtual void AddTask(Task task)
     {
         tasks.Add(task);
         if (started) task.Start();
     }
 
-    public async Task StartAsync()
+    public virtual async Task StartAsync()
     {
         if (started)
             throw new InvalidOperationException("Cannot start the task manager twice");
@@ -35,7 +35,7 @@ public class TaskManager : IAddTask
     }
 
     public bool IsCompleted => tasks.All(t => t.IsCompleted);
-    public async Task AwaitFinish()
+    public virtual async Task AwaitFinish()
     {
         while (!IsCompleted)
         {
