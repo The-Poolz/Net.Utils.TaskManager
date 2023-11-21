@@ -14,7 +14,7 @@ public class TaskManager : IAddTask
         AddRange(tasks);
     }
 
-    public virtual void AddRange(IEnumerable<Task> tasks)
+    public void AddRange(IEnumerable<Task> tasks)
     {
         foreach (var task in tasks) AddTask(task);
     }
