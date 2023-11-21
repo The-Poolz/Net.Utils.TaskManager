@@ -4,6 +4,34 @@
     <TargetFramework>net6.0</TargetFramework>
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
+    
+    <PackageId>Net.Utils.TaskManager</PackageId>
+    <Title>.NET Task Manager</Title>
+    <Version>1.0.0</Version>
+    <Authors>RoyKodman</Authors>
+    <Company>ThePoolz</Company>
+    <Product>Net.Utils.TaskManager</Product>
+    <Description>.NET Task Manager for efficient concurrent execution and dynamic task handling.</Description>
+    <PackageReadmeFile>README.md</PackageReadmeFile>
+    <PackageTags>NET;Task</PackageTags>
+    <PackageLicenseExpression>MIT</PackageLicenseExpression>
+    <PackageLicenseFile>LICENSE</PackageLicenseFile>
+    <RepositoryUrl>https://github.com/The-Poolz/Net.Utils.TaskManager</RepositoryUrl>
+    <RepositoryType>git</RepositoryType>
+    <PackageIcon></PackageIcon>
+    <PackageProjectUrl></PackageProjectUrl>
+    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>   
   </PropertyGroup>
 
+  <ItemGroup>
+    <None Include="..\..\LICENSE">
+      <Pack>True</Pack>
+      <PackagePath>\</PackagePath>
+    </None>
+    <None Include="..\..\README.md">
+      <Pack>True</Pack>
+      <PackagePath>\</PackagePath>
+    </None>
+  </ItemGroup>
+  
 </Project>
