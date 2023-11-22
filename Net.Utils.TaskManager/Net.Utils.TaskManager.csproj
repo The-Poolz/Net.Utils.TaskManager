@@ -14,7 +14,6 @@
     <Description>.NET Task Manager for efficient concurrent execution and dynamic task handling.</Description>
     <PackageReadmeFile>README.md</PackageReadmeFile>
     <PackageTags>NET;Task</PackageTags>
-    <PackageLicenseExpression>MIT</PackageLicenseExpression>
     <PackageLicenseFile>LICENSE</PackageLicenseFile>
     <RepositoryUrl>https://github.com/The-Poolz/Net.Utils.TaskManager</RepositoryUrl>
     <RepositoryType>git</RepositoryType>
@@ -23,8 +22,10 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <None Include="..\..\LICENSE" Pack="true" PackagePath="" />
-    <None Include="..\..\README.md" Pack="true" PackagePath="" />
+    <None Include="..\LICENSE">
+      <Pack>True</Pack>
+      <PackagePath>\</PackagePath>
+    </None>
   </ItemGroup>
   
 </Project>
