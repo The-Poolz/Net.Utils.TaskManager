@@ -17,7 +17,7 @@ One of the key features of `Net.Utils.TaskManager` is its ability to handle task
 
 ## Initialization
 
-To begin using the `Net.Utils.askManager`, you must first create an instance of the `TaskManager` class.
+To begin using the `Net.Utils.askManager`, you must first create an instance of the `TaskManager` class:
 
 ```csharp
 var taskManager = new TaskManager();
@@ -58,3 +58,32 @@ await taskManager.StartAsync();
 await taskManager.AwaitFinish();
 ```
 
+## Extensibility with IAddTask
+
+The `IAddTask` interface is designed to allow for extensibility in task management. By implementing this interface, developers can customize how tasks are added to the manager, enabling integration with different task sources or adding additional logic when tasks are registered.
+
+For example:
+
+```csharp
+public class CustomTaskAdder : IAddTask
+{
+    private readonly TaskManager manager;
+
+    public CustomTaskAdder(TaskManager taskManager)
+    {
+        manager = taskManager;
+    }
+
+    public void AddTask(Task task)
+    {
+        // Custom logic before adding a task
+        manager.AddTask(task);
+    }
+
+    public void AddRange(IEnumerable<Task> tasks)
+    {
+        // Custom logic before adding a range of tasks
+        manager.AddRange(tasks);
+    }
+}
+```
