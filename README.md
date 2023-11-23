@@ -3,7 +3,7 @@
 
 [![SonarCloud](https://github.com/The-Poolz/Net.Utils.TaskManager/actions/workflows/sonarcloud.yml/badge.svg)](https://github.com/The-Poolz/Net.Utils.TaskManager/actions/workflows/sonarcloud.yml)
 [![CodeFactor](https://www.codefactor.io/repository/github/the-poolz/net.utils.taskmanager/badge)](https://www.codefactor.io/repository/github/the-poolz/net.utils.taskmanager)
-[![License: MIT](https://img.shields.io/badge/license-MIT-orange.svg)](https://github.com/The-Poolz/Net.Utils.TaskManager/blob/main/LICENSE)
+[![License: MIT](https://img.shields.io/badge/license-MIT-orange.svg)](https://github.com/The-Poolz/Net.Utils.TaskManager/blob/master/LICENSE)
 
 C# library offering an advanced asynchronous Task Manager optimized for handling concurrent task execution with a focus on dynamic task queuing. It is specifically designed to allow runtime addition of tasks, ensuring seamless integration of newly discovered tasks into the ongoing execution process. The library demonstrates effective use of Task parallelism and continuation in .NET.
 
