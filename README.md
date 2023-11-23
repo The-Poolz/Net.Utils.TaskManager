@@ -3,6 +3,7 @@
 
 [![SonarCloud](https://github.com/The-Poolz/Net.Utils.TaskManager/actions/workflows/sonarcloud.yml/badge.svg)](https://github.com/The-Poolz/Net.Utils.TaskManager/actions/workflows/sonarcloud.yml)
 [![CodeFactor](https://www.codefactor.io/repository/github/the-poolz/net.utils.taskmanager/badge)](https://www.codefactor.io/repository/github/the-poolz/net.utils.taskmanager)
+[![License: MIT](https://img.shields.io/badge/license-MIT-orange.svg)](https://github.com/The-Poolz/Net.Utils.TaskManager/blob/main/LICENSE)
 
 C# library offering an advanced asynchronous Task Manager optimized for handling concurrent task execution with a focus on dynamic task queuing. It is specifically designed to allow runtime addition of tasks, ensuring seamless integration of newly discovered tasks into the ongoing execution process. The library demonstrates effective use of Task parallelism and continuation in .NET.
 
@@ -10,6 +11,7 @@ C# library offering an advanced asynchronous Task Manager optimized for handling
 - Concurrent and asynchronous task execution.
 - Ability to add and handle tasks dynamically after the task manager has started.
 - Efficient handling of tasks with continuation support.
+- Extensible design with `IAddTask` interface for customizable task addition.
 
 ## Handling of Dynamic Tasks
 
@@ -17,7 +19,7 @@ One of the key features of `Net.Utils.TaskManager` is its ability to handle task
 
 ## Initialization
 
-To begin using the `Net.Utils.askManager`, you must first create an instance of the `TaskManager` class.
+To begin using the `Net.Utils.askManager`, you must first create an instance of the `TaskManager` class:
 
 ```csharp
 var taskManager = new TaskManager();
@@ -37,24 +39,51 @@ The `TaskManager` class provides the following methods:
 - `StartAsync()` : Starts executing the tasks asynchronously.
 - `AwaitFinish()` : Awaits the completion of all tasks.
 
-#### AddTask
+#### `AddTask`
 ```csharp
 // Adds a new task to the manager
 taskManager.AddTask(new Task(() => DoWork()));
 ```
-#### AddRange
+#### `AddRange`
 ```csharp
 // Adds a range of tasks at once
 taskManager.AddRange(new List<Task> { task1, task2, task3 });
 ```
-#### StartAsync
+#### `StartAsync`
 ```csharp
 // Starts the task manager and executes all tasks
 await taskManager.StartAsync();
 ```
-#### AwaitFinish
+#### `AwaitFinish`
 ```csharp
 // Waits for all tasks to complete
 await taskManager.AwaitFinish();
 ```
 
+## IAddTask
+
+The `IAddTask` interface is designed to allow for extensibility in task management. By implementing this interface, developers can customize how tasks are added to the manager, enabling integration with different task sources or adding additional logic when tasks are registered.
+
+```csharp
+public class CustomTaskAdder : IAddTask
+{
+    private readonly TaskManager manager;
+
+    public CustomTaskAdder(TaskManager taskManager)
+    {
+        manager = taskManager;
+    }
+
+    public void AddTask(Task task)
+    {
+        // Custom logic before adding a task
+        manager.AddTask(task);
+    }
+
+    public void AddRange(IEnumerable<Task> tasks)
+    {
+        // Custom logic before adding a range of tasks
+        manager.AddRange(tasks);
+    }
+}
+```
