@@ -1,3 +1,4 @@
+![linkedin_banner_image_1](https://github.com/The-Poolz/Net.Utils.TaskManager/assets/143507456/6d244d30-00d6-49fa-b915-4fc2d67ef1e6)
 # Net.Utils.TaskManager
 [![SonarCloud](https://sonarcloud.io/images/project_badges/sonarcloud-white.svg)](https://sonarcloud.io/summary/new_code?id=The-Poolz_Net.Utils.TaskManager)
 
@@ -11,7 +12,7 @@ C# library offering an advanced asynchronous Task Manager optimized for handling
 - Concurrent and asynchronous task execution.
 - Ability to add and handle tasks dynamically after the task manager has started.
 - Efficient handling of tasks with continuation support.
-- Extensible design with `IAddTask` interface for customizable task addition.
+- Extensible design with [`IAddTask`](#iaddtask) interface for customizable task addition.
 
 ## Handling of Dynamic Tasks
 
