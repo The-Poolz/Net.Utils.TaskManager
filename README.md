@@ -1,4 +1,4 @@
-![linkedin_banner_image_1](https://github.com/The-Poolz/Net.Utils.TaskManager/assets/143507456/6d244d30-00d6-49fa-b915-4fc2d67ef1e6)
+![linkedin_banner_image_1](https://github.com/The-Poolz/Net.Utils.TaskManager/assets/143507456/d7f973c6-fed0-4f6a-85ff-766e392fdebc)
 # Net.Utils.TaskManager
 [![SonarCloud](https://sonarcloud.io/images/project_badges/sonarcloud-white.svg)](https://sonarcloud.io/summary/new_code?id=The-Poolz_Net.Utils.TaskManager)
 
