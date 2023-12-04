@@ -12,7 +12,7 @@ C# library offering an advanced asynchronous Task Manager optimized for handling
 - Concurrent and asynchronous task execution.
 - Ability to add and handle tasks dynamically after the task manager has started.
 - Efficient handling of tasks with continuation support.
-- Extensible design with [`IAddTask`](#iaddtask) interface for customizable task addition.
+- Extensible design with [`ITaskManager`](#iaddtask) interface for customizable task addition.
 
 ## Handling of Dynamic Tasks
 
