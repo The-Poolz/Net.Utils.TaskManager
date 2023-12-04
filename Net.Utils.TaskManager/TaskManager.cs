@@ -2,7 +2,7 @@
 
 namespace Net.Utils.TaskManager;
 
-public class TaskManager : IAddTask
+public class TaskManager : ITaskManager
 {
     private readonly ConcurrentBag<Task> tasks = new ConcurrentBag<Task>();
     private bool started = false;
