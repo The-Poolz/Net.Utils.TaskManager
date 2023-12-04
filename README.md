@@ -20,7 +20,7 @@ One of the key features of `Net.Utils.TaskManager` is its ability to handle task
 
 ## Initialization
 
-To begin using the `Net.Utils.askManager`, you must first create an instance of the `TaskManager` class:
+To begin using the `Net.Utils.TaskManager`, you must first create an instance of the `TaskManager` class:
 
 ```csharp
 var taskManager = new TaskManager();
