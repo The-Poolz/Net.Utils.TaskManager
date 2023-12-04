@@ -4,12 +4,17 @@ namespace Net.Utils.TaskManager;
 
 public class TaskManager : ITaskManager
 {
-    private readonly ConcurrentBag<Task> tasks = new ConcurrentBag<Task>();
-    private bool started = false;
+    private readonly ConcurrentBag<Task> _tasks;
+    private bool started;
+    public bool IsCompleted => _tasks.All(t => t.IsCompleted);
 
-    public TaskManager() {}
+    public TaskManager()
+    {
+        _tasks = new ConcurrentBag<Task>();
+    }
 
-    public TaskManager(IEnumerable<Task> tasks) : this()
+    public TaskManager(IEnumerable<Task> tasks)
+        : this()
     {
         AddRange(tasks);
     }
@@ -21,7 +26,7 @@ public class TaskManager : ITaskManager
 
     public virtual void AddTask(Task task)
     {
-        tasks.Add(task);
+        _tasks.Add(task);
         if (started) task.Start();
     }
 
@@ -30,16 +35,15 @@ public class TaskManager : ITaskManager
         if (started)
             throw new InvalidOperationException("Cannot start the task manager twice");
         started = true;
-        Parallel.ForEach(tasks, (task) => { task.Start(); });
+        Parallel.ForEach(_tasks, (task) => { task.Start(); });
         await AwaitFinish();
     }
 
-    public bool IsCompleted => tasks.All(t => t.IsCompleted);
     public virtual async Task AwaitFinish()
     {
         while (!IsCompleted)
         {
-            await Task.WhenAll(tasks);
+            await Task.WhenAll(_tasks);
         }
     }
 }
