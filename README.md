@@ -1,5 +1,7 @@
-![linkedin_banner_image_1](https://github.com/The-Poolz/Net.Utils.TaskManager/assets/143507456/d7f973c6-fed0-4f6a-85ff-766e392fdebc)
+![Project logo](https://raw.githubusercontent.com/The-Poolz/Net.Utils.TaskManager/master/logo/1536x768.png)
+
 # Net.Utils.TaskManager
+
 [![SonarCloud](https://sonarcloud.io/images/project_badges/sonarcloud-white.svg)](https://sonarcloud.io/summary/new_code?id=The-Poolz_Net.Utils.TaskManager)
 
 [![SonarCloud](https://github.com/The-Poolz/Net.Utils.TaskManager/actions/workflows/sonarcloud.yml/badge.svg)](https://github.com/The-Poolz/Net.Utils.TaskManager/actions/workflows/sonarcloud.yml)
